@@ -1,31 +1,43 @@
 package br.com.empresa.demo.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.empresa.demo.model.Beneficiario;
+import br.com.empresa.demo.model.Documento;
 import br.com.empresa.demo.repository.BeneficiarioRepository;
 
 @Service
 public class BeneficiarioService {
+
 	@Autowired
-	private BeneficiarioRepository repository;
+	private BeneficiarioRepository beneficiarioRepository;
 
 	public List<Beneficiario> listarBeneficiarios() {
-		return repository.findAll();
+		return beneficiarioRepository.findAll();
 	}
 
 	public Beneficiario encontrarPorId(Long id) {
-		return repository.findById(id).orElse(null);
+		Optional<Beneficiario> beneficiarioOptional = beneficiarioRepository.findById(id);
+		return beneficiarioOptional
+				.orElseThrow(() -> new NoSuchElementException("Beneficiário não encontrado com ID: " + id));
 	}
 
 	public Beneficiario salvarBeneficiario(Beneficiario beneficiario) {
-		return repository.save(beneficiario);
+		if (beneficiario.getDocumentos() != null) {
+			for (Documento documento : beneficiario.getDocumentos()) {
+				documento.setBeneficiario(beneficiario);
+			}
+		}
+
+		return beneficiarioRepository.save(beneficiario);
 	}
 
 	public void deletarBeneficiario(Long id) {
-		repository.deleteById(id);
+		beneficiarioRepository.deleteById(id);
 	}
 }
