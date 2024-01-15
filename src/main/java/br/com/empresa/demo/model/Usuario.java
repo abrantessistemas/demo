@@ -14,10 +14,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +42,11 @@ public class Usuario implements UserDetails {
 			return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
 		else
 			return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+
+	@Override
+	public String getUsername() {
+		return username;
 	}
 
 	@Override

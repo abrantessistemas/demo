@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import br.com.empresa.demo.model.Usuario;
 import br.com.empresa.demo.repository.UsuarioRepository;
 
+@Service
 public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	public List<Usuario> listarUsuários() {
 		return repository.findAll();
@@ -28,7 +28,7 @@ public class UsuarioService {
 	}
 
 	public Usuario salvarUsuário(Usuario user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword())); // Criptografa a senha antes de salvar
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		return repository.save(user);
 	}
 
