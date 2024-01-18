@@ -15,7 +15,7 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 
-	public List<Usuario> listarUsuários() {
+	public List<Usuario> listarUsuarios() {
 		return repository.findAll();
 	}
 
@@ -23,16 +23,16 @@ public class UsuarioService {
 		return repository.findById(id).orElse(null);
 	}
 
-	public UserDetails encontrarPorNomeDeUsuário(String username) {
+	public UserDetails encontrarPorNomeDeUsuario(String username) {
 		return repository.findByUsername(username);
 	}
 
-	public Usuario salvarUsuário(Usuario user) {
+	public Usuario salvarUsuario(Usuario user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		return repository.save(user);
 	}
 
-	public void deletarUsuário(Long id) {
+	public void deletarUsuario(Long id) {
 		repository.deleteById(id);
 	}
 }

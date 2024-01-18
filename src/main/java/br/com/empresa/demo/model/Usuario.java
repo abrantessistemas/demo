@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.empresa.demo.configuration.UserRole;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +29,7 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
+	@Enumerated(EnumType.STRING)
 	private UserRole role;
 	private String password;
 
