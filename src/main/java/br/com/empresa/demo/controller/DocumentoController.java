@@ -34,6 +34,12 @@ public class DocumentoController {
 		return new ResponseEntity<>(documentos, HttpStatus.OK);
 	}
 
+	@GetMapping("/beneficiario/{id}")
+	public ResponseEntity<List<Documento>> listarDocumentosByBeneficiario(@PathVariable Long id) {
+		List<Documento> documentos = service.findAllByBeneficiario(id);
+		return new ResponseEntity<>(documentos, HttpStatus.OK);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Documento> encontrarDocumentoPorId(@PathVariable Long id) {
 		if (id == null || id <= 0) {

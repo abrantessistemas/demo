@@ -17,6 +17,12 @@ public class DocumentoService {
 		return repository.findAll();
 	}
 
+	public List<Documento> findAllByBeneficiario(Long beneficiarioId) {
+		List<Documento> documentos = repository.findAllByBeneficiario(beneficiarioId);
+
+		return documentos;
+	}
+
 	public Documento encontrarPorId(Long id) {
 		return repository.findById(id).orElse(null);
 	}

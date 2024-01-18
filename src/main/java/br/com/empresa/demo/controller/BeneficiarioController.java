@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.empresa.demo.dto.BeneficiarioDTO;
 import br.com.empresa.demo.mapper.BeneficiarioMapper;
 import br.com.empresa.demo.model.Beneficiario;
-import br.com.empresa.demo.model.Documento;
 import br.com.empresa.demo.services.BeneficiarioService;
 import jakarta.validation.Valid;
 
@@ -48,12 +47,6 @@ public class BeneficiarioController {
 	public ResponseEntity<Beneficiario> criarBeneficiario(@Valid @RequestBody BeneficiarioDTO beneficiarioDTO) {
 		Beneficiario beneficiario = BeneficiarioMapper.INSTANCE.toBeneficiario(beneficiarioDTO);
 
-		if (beneficiario.getDocumentos() != null) {
-			for (Documento documento : beneficiario.getDocumentos()) {
-				documento.setBeneficiario(beneficiario);
-			}
-		}
-
 		beneficiario.setDataInclusao(new Date());
 		beneficiario.setDataAtualizacao(new Date());
 		Beneficiario novoBeneficiario = service.salvarBeneficiario(beneficiario);
@@ -70,13 +63,6 @@ public class BeneficiarioController {
 			beneficiarioExistente.setNome(beneficiario.getNome());
 			beneficiarioExistente.setTelefone(beneficiario.getTelefone());
 			beneficiarioExistente.setDataNascimento(beneficiario.getDataNascimento());
-
-			if (beneficiario.getDocumentos() != null) {
-				for (Documento documento : beneficiario.getDocumentos()) {
-					documento.setBeneficiario(beneficiarioExistente);
-				}
-				beneficiarioExistente.setDocumentos(beneficiario.getDocumentos());
-			}
 
 			beneficiarioExistente.setDataAtualizacao(new Date());
 

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.empresa.demo.model.Beneficiario;
-import br.com.empresa.demo.model.Documento;
 import br.com.empresa.demo.repository.BeneficiarioRepository;
 
 @Service
@@ -28,12 +27,6 @@ public class BeneficiarioService {
 	}
 
 	public Beneficiario salvarBeneficiario(Beneficiario beneficiario) {
-		if (beneficiario.getDocumentos() != null) {
-			for (Documento documento : beneficiario.getDocumentos()) {
-				documento.setBeneficiario(beneficiario);
-			}
-		}
-
 		return beneficiarioRepository.save(beneficiario);
 	}
 
